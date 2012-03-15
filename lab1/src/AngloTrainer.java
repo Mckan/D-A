@@ -12,6 +12,7 @@ public class AngloTrainer {
 	private ArrayList<String> dictionary = new ArrayList<String>();
 	private Random randomGenerator = new Random();
 	private String letters;
+	private String sortedLetters;
 	private String playerInput;
 	private String playerInputSorted;
 	private int length = 0;
@@ -142,6 +143,11 @@ public class AngloTrainer {
     
     private void printWords(String letters)
     {
+    	for(String x : dictionary)
+    	{
+    		if( includes(sort(letters) , sort(x) ) )
+    		System.out.println(x);
+    	}
     	
     }
     
@@ -154,7 +160,7 @@ public class AngloTrainer {
 				length = temp;
 			
 		}
-		String letters = randomLetters(length);
+		letters = randomLetters(length);
 		
 		System.out.println(dictionary.size() + " words loaded from " + dictionaryFile);
 		System.out.println("The random letters are: " + letters);
@@ -163,9 +169,7 @@ public class AngloTrainer {
 		BufferedReader input = new BufferedReader(
                 new InputStreamReader(System.in));
 		
-		String sortedLetters = sort(letters);
-
-		String sortedWord;
+		sortedLetters = sort(letters);
 		
 		while(true)
 		{
@@ -175,12 +179,15 @@ public class AngloTrainer {
 			{}
 			playerInputSorted = sort(playerInput);
 
-			if((includes(sortedLetters, playerInputSorted)))
-				if(dictionary.contains(playerInput))
-					System.out.println("Okey!");				
+			if( (includes(sortedLetters, playerInputSorted))  && dictionary.contains(playerInput))
+				System.out.println("Okey!");	
+
 			else
 			{
-				System.out.println("U lose");
+				System.out.println("Your suggestion was not found in the dictionary.");
+				System.out.println("I found: ");
+				printWords(letters);
+
 				break;
 			}
 						
