@@ -1,14 +1,36 @@
 import java.io.*;
 import java.util.*;
 
-// Author:
-// Email:	
-// Date:	
+// Author:	Martin Augustsson
+// Email:	maraugu@student.chalmers.se
+// Date:	16-03-2012
 
 public class WordLists {
 	
+	FileInputStream fileStream;
+	DataInputStream in;
+	BufferedReader br;
+	
 	public WordLists(String inputFileName) {
-	    // ... define!
+		try
+		{
+			fileStream = new FileInputStream(inputFileName);
+			in = new DataInputStream(fileStream);
+			br = new BufferedReader(new InputStreamReader(in));
+		}catch (Exception E)
+		{}
+		
+		String test;
+		try
+		{
+			while( (test=getWord()) != null)
+			{
+		
+				System.out.println(test);
+				reverse(test);
+			}
+		}catch (IOException e){}
+
 	}
 	
 	private boolean isPunctuationChar(char c) {
@@ -46,8 +68,15 @@ public class WordLists {
 	}
 	
 	private String reverse(String s) {
-	    // define!
-		return s;
+		char[] tmp = new char[s.length()];
+		int temp = s.length()-1;
+	    for(int i = 0; i < s.length(); i++)
+	    {
+	    	tmp[i]= s.charAt(temp-i);
+	    }
+	    String s2 = new String(tmp);
+	    System.out.println(s2);
+		return s2;
 	}
 	
 	private void computeWordFrequencies() {

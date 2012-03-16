@@ -124,7 +124,7 @@ public class AngloTrainer {
     	try{
     	new AngloTrainer("dictionary.txt");
     	}catch (Exception e){
-    		System.out.println("Fail!!!!");
+    		
     	}
     }
     
@@ -170,8 +170,8 @@ public class AngloTrainer {
                 new InputStreamReader(System.in));
 		
 		sortedLetters = sort(letters);
-		
-		while(true)
+		playerInput = null;
+		while( playerInput != "^Z")
 		{
 			try{
 			playerInput = input.readLine();
