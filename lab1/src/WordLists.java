@@ -20,16 +20,16 @@ public class WordLists {
 		}catch (Exception E)
 		{}
 		
-		String test;
-		try
-		{
-			while( (test=getWord()) != null)
-			{
-		
-				System.out.println(test);
-				reverse(test);
-			}
-		}catch (IOException e){}
+//		String test;
+//		try
+//		{
+//			while( (test=getWord()) != null)
+//			{
+//		
+//				System.out.println(test);
+//				reverse(test);
+//			}
+//		}catch (IOException e){}
 
 	}
 	
@@ -75,7 +75,6 @@ public class WordLists {
 	    	tmp[i]= s.charAt(temp-i);
 	    }
 	    String s2 = new String(tmp);
-	    System.out.println(s2);
 		return s2;
 	}
 	
@@ -90,7 +89,37 @@ public class WordLists {
 	
 
 	private void computeBackwardsOrder() {
-	    // define!
+		TreeSet<String> tmp = new TreeSet<String>();
+
+		String s;
+		try
+		{
+			while( (s=getWord()) != null)
+			{
+				tmp.add(reverse(s));
+			}
+		}catch (IOException e){}
+	    
+		try{
+			  // Create file 
+			  FileWriter fstream = new FileWriter("backwardsSorted.txt");
+			  BufferedWriter out = new BufferedWriter(fstream);
+			  
+			  //Write every word to file
+			  Iterator<String> i = tmp.iterator();
+			  while(i.hasNext())
+			  {
+				  out.write(reverse(i.next()) + "\n");
+			  }
+			  
+			  //Close the output stream
+			  out.close();
+			  }catch (Exception e){//Catch exception if any
+			  System.err.println("Error: " + e.getMessage());
+			  }
+		
+		
+		
 	}
 
 	public static void main(String[] args) throws IOException {
@@ -101,6 +130,8 @@ public class WordLists {
 		
 		System.out.println("Finished!");
 	}
+	
+	
 }
 
 
