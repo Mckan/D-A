@@ -79,12 +79,63 @@ public class WordLists {
 	}
 	
 	private void computeWordFrequencies() {
-          // define!
+		try{
+		FileWriter fw = new FileWriter("alfaSorted.txt");
+		BufferedWriter bw = new BufferedWriter(fw);
+		TreeMap<String,Integer> temp = (TreeMap<String,Integer>)tm.clone();
+		while(true){
+			if(temp.firstEntry()==null)
+        		break;
+			
+			bw.write("" + temp.pollFirstEntry() + "\n");
+		}
+		bw.close();
+		}
+		catch(IOException ioe){
+			ioe.printStackTrace();
+		}
+		
 	}
 	
 
-	private void computeFrequencyMap() {
-          // define!
+private void computeFrequencyMap() {
+		TreeMap<String,Integer> tm2 = (TreeMap<String,Integer>)tm.clone();		
+		TreeMap<Integer, TreeSet<String>> freq = new TreeMap<Integer, TreeSet<String>>();
+		TreeSet<String> test = new TreeSet<String>();
+
+		try{
+		FileWriter fw = new FileWriter("frequencySorted.txt");
+		BufferedWriter bw = new BufferedWriter(fw);
+		String word;
+		for(String key : tm2.keySet()){
+		
+			test.add(key);	
+			
+			if(freq.containsKey(tm2.get(key))){
+				TreeSet<String> temp = freq.get(tm2.get(key));
+				temp.add(key);
+			}
+			else{
+				TreeSet<String> temp = new TreeSet<String>();
+				temp.add(key);
+				freq.put(tm2.get(key), temp);
+				
+			}
+		
+		}
+
+		while(true){
+			if(freq.firstEntry()==null)
+				break;
+			
+			bw.write("\n" + freq.pollFirstEntry() + "\n");
+		}
+		bw.close();
+		}
+		catch(IOException ioe){
+			ioe.printStackTrace();
+		}
+		
 	}
 	
 
