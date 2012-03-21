@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 import java.util.Random;
 
-// Author:
+// Author: lol
 // Email:	
 // Date:	
 
