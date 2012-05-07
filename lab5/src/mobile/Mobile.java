@@ -59,12 +59,48 @@ public class Mobile {
 	
 	// Print the leaves of the mobile
 	public void flatten()  {
-	      // ...
+			
+			if(isSimple())
+			{
+				System.out.println(weight);
+			}
+		
+			if(left != null)
+			{
+				left.flatten();
+			}
+		
+			if(right != null)
+			{
+				right.flatten();
+			}
+		
 	}  
 	
 //	Print a structured view of the mobile
 	public void prettyPrint() {
-	      // ...
+			
+			
+			
+			if(isSimple())
+			{	
+				System.out.print("(" + (int)weight + ")");
+			}
+			if(left != null)
+			{	System.out.print("[");
+				left.prettyPrint();
+				System.out.print("," + (int)leftLength + ",");
+				
+			}
+		
+			if(right != null)
+			{
+				right.prettyPrint();
+				System.out.print("," + (int)rightLength);
+				System.out.print("]");
+			}
+			
+			
 	}
 	
 // Determine if the mobile is balanced
@@ -90,7 +126,27 @@ public class Mobile {
 	
 // Change this mobile to its mirror image
 	public void mirror() {
-         // ...
+		Mobile tmp;
+		float tmpLength;
+		
+		if(left != null)
+		{
+			left.mirror();
+		}
+		
+		if(right != null)
+		{
+			right.mirror();
+		}
+		
+		tmp = right;
+		tmpLength = rightLength;
+		
+		right = left;
+		rightLength = leftLength;
+		
+		left = tmp;
+        leftLength = tmpLength;
 	}
 	
 	private boolean isSimple() { 
@@ -105,8 +161,8 @@ public class Mobile {
 		System.out.println("Total mass: " + m.getWeight() );
 
 		System.out.println("Height:     " + m.getHeight() );
-		//m.flatten(); System.out.println();
-		//m.prettyPrint(); System.out.println();
+		m.flatten(); System.out.println();
+		m.prettyPrint(); System.out.println();
 		if ( m.isBalanced() )
 			System.out.println("Balanced!");
 		else
@@ -129,12 +185,12 @@ public class Mobile {
 			System.out.println("Identical!");	// They should definately not!
 		else
 			System.out.println("Not identical!");
-		
+		*/
 		m.mirror();
 		m.prettyPrint(); System.out.println();
 		m.mirror();
 		m.prettyPrint(); System.out.println();
-*/
+
 	}
 }
 
