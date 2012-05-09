@@ -37,24 +37,15 @@ public class Mobile {
 	
 	// Return the maximum height of the mobile
 	public int getHeight() {
-	    int height;
 
-	    	height = 1;
-			if( ( isSimple() == true) || ( left.isSimple() && right.isSimple() ) == true)
+			if( ( isSimple() == true) )
 			{
+				return 1;
+			}
+			else {
 				
+				return right.getHeight() + left.getHeight();
 			}
-			else if(left.isSimple() == false)
-			{
-				height += left.getHeight();
-			}
-			else
-			{
-				height += right.getHeight();
-			}
-
-		
-		return height;
 	}  
 	
 	// Print the leaves of the mobile
@@ -62,19 +53,13 @@ public class Mobile {
 			
 			if(isSimple())
 			{
-				System.out.println(weight);
+				System.out.print((int)weight + " ");
 			}
-		
-			if(left != null)
+			else
 			{
 				left.flatten();
-			}
-		
-			if(right != null)
-			{
 				right.flatten();
 			}
-		
 	}  
 	
 //	Print a structured view of the mobile
@@ -86,21 +71,15 @@ public class Mobile {
 			{	
 				System.out.print("(" + (int)weight + ")");
 			}
-			if(left != null)
+			else
 			{	System.out.print("[");
 				left.prettyPrint();
 				System.out.print("," + (int)leftLength + ",");
-				
-			}
-		
-			if(right != null)
-			{
+
 				right.prettyPrint();
 				System.out.print("," + (int)rightLength);
 				System.out.print("]");
 			}
-			
-			
 	}
 	
 // Determine if the mobile is balanced
@@ -113,56 +92,36 @@ public class Mobile {
 	}   
 
 // Determine if two mobiles are equal	
-	public boolean equals(  Mobile rhs ) {
+	public boolean equals(  Object rhs ) {
 	    
 		if(rhs == null || getClass() != rhs.getClass() )
 			return false;
 		else
 		{
-			if(left != null)
-			{
-				left.equals(rhs.left);
-			}
-			if(right != null)
-			{
-				right.equals(rhs.right);
-			}
+			Mobile tmp = (Mobile) rhs;
+		
 			
-			return ( (right == rhs.right) && (left == rhs.left) || weight == rhs.weight ); 
-		} 
+			return ((isSimple() && tmp.isSimple()) && weight == tmp.weight) || 	
+					left.equals(tmp.left) && right.equals(tmp.right);
+		}	
 	}
 	
 //	Return a clone of this mobile
 	public Mobile clone() {
-         
-		 Mobile tmp = new Mobile(0);
-		 
-		float tmpLength;
+		Mobile tmp = null;
+		try{
+			tmp = (Mobile) super.clone();
+		}catch(Exception E)
+		{System.out.println(E);}
+
+	
 			
-		if(left != null)
-		{
-			left.mirror();
-		}
-		
-		if(right != null)
-		{
-			right.mirror();
-		}
-			
-		// if-sats om det är simple eller inte
-		if(isSimple())
-		{
+			tmp.leftLength = leftLength;
+			tmp.rightLength = rightLength;
+	
 			tmp.weight = weight;
-		}
-	    else
-	    {
-	    	tmp.right = right;
-	    	tmp.rightLength = rightLength;
-			
-			tmp.left = left;
-		    tmp.leftLength = leftLength;
-	    }
-		 
+		
+	 
          return tmp;
 	}
 	
@@ -171,14 +130,10 @@ public class Mobile {
 		Mobile tmp;
 		float tmpLength;
 		
-		if(left != null)
+		if(!isSimple())
 		{
 			left.mirror();
-		}
-		
-		if(right != null)
-		{
-			right.mirror();
+			
 		}
 		
 		tmp = right;
